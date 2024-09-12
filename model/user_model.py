@@ -50,3 +50,39 @@ class user_model:
             f"INSERT INTO books(book_title) VALUES('{data['book_title']}')"
         )
         return make_response({"message": "Book Added Successfully"}, 201)
+
+    def book_addreview_model(self, data):
+        self.cur.execute(f"INSERT INTO reviews(review) VALUES('{data['book_title']}')")
+        return make_response({"message": "Book Added Successfully"}, 201)
+
+    def user_update_model(self, data):
+        self.cur.execute(
+            f"UPDATE users SET name='{data['name']}', email='{data['email']}', phone='{data['phone']}', role_id='{data['role_id']}', password='{data['password']}' WHERE id={data['id']}"
+        )
+        if self.cur.rowcount > 0:
+            return make_response({"message": "User Updated Successfully"}, 201)
+        else:
+            return make_response({"message": "Nothing to Update"}, 202)
+
+    def book_update_model(self, data):
+        self.cur.execute(
+            f"UPDATE books SET book_title='{data['book_title']}' WHERE id={data['id']}"
+        )
+        if self.cur.rowcount > 0:
+            return make_response({"message": "Book Updated Successfully"}, 201)
+        else:
+            return make_response({"message": "Nothing to Update"}, 202)
+
+    def user_delete_model(self, id):
+        self.cur.execute(f"DELETE FROM users WHERE id={id}")
+        if self.cur.rowcount > 0:
+            return make_response({"message": "User Deleted Successfully"}, 200)
+        else:
+            return make_response({"message": "Nothing to Delete"}, 202)
+
+    def book_delete_model(self, id):
+        self.cur.execute(f"DELETE FROM books WHERE id={id}")
+        if self.cur.rowcount > 0:
+            return make_response({"message": "Book Deleted Successfully"}, 200)
+        else:
+            return make_response({"message": "Nothing to Delete"}, 202)
