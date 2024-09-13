@@ -51,8 +51,10 @@ class user_model:
         )
         return make_response({"message": "Book Added Successfully"}, 201)
 
-    def book_addreview_model(self, data):
-        self.cur.execute(f"INSERT INTO reviews(review) VALUES('{data['book_title']}')")
+    def book_addreview_model(self, data):  # Update
+        self.cur.execute(
+            f"INSERT INTO books(review_id, user_id) VALUES('{data['review_id']}', '{data['user_id']}' WHERE id={data['id']})"
+        )
         return make_response({"message": "Book Added Successfully"}, 201)
 
     def user_update_model(self, data):
@@ -73,6 +75,15 @@ class user_model:
         else:
             return make_response({"message": "Nothing to Update"}, 202)
 
+    def book_update_review_model(self, data):  # Update
+        self.cur.execute(
+            f"UPDATE reviews SET book_title='{data['book_title']}' WHERE id={data['id']}"
+        )
+        if self.cur.rowcount > 0:
+            return make_response({"message": "Book's Review Updated Successfully"}, 201)
+        else:
+            return make_response({"message": "Nothing to Update"}, 202)
+
     def user_delete_model(self, id):
         self.cur.execute(f"DELETE FROM users WHERE id={id}")
         if self.cur.rowcount > 0:
@@ -84,5 +95,12 @@ class user_model:
         self.cur.execute(f"DELETE FROM books WHERE id={id}")
         if self.cur.rowcount > 0:
             return make_response({"message": "Book Deleted Successfully"}, 200)
+        else:
+            return make_response({"message": "Nothing to Delete"}, 202)
+
+    def book_delete_review_model(self, id):
+        self.cur.execute(f"DELETE FROM reviews WHERE id={id}")
+        if self.cur.rowcount > 0:
+            return make_response({"message": "Book Review Deleted Successfully"}, 200)
         else:
             return make_response({"message": "Nothing to Delete"}, 202)
