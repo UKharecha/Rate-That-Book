@@ -26,7 +26,7 @@ def book_addone_controller():
     return obj.book_addone_model(request.form)
 
 
-@app.route("/book/review/<id>", methods=["POST"])  # Add Book Review
+@app.route("/book/addreview/<id>", methods=["POST"])  # Add Book Review
 def book_addreview_controller():
     return obj.book_addreview_model(request.form)
 
@@ -36,8 +36,13 @@ def user_update_controller():
     return obj.user_update_model(request.form)
 
 
-@app.route("/book/update", methods=["PUT"])  # Update Book
+@app.route("/book/update/review", methods=["PUT"])  # Update Book Review
 def book_update_controller():
+    return obj.book_update_review_model(request.form)
+
+
+@app.route("/book/review/<id>", methods=["PUT"])  # Update Book
+def book_update_review_controller():
     return obj.book_update_model(request.form)
 
 
@@ -49,3 +54,8 @@ def user_delete_controller(id):
 @app.route("/book/delete/<id>", methods=["DELETE"])  # Delete Book
 def book_delete_controller(id):
     return obj.book_delete_model(id)
+
+
+@app.route("/book/delete/review/<id>", methods=["DELETE"])  # Delete Book
+def book_delete_review_controller(id):
+    return obj.book_delete_review_model(id)
