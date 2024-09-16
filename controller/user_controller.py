@@ -2,11 +2,14 @@ from app import app
 from model.user_model import *
 from flask import request, send_file
 from datetime import datetime
+from model.auth_model import auth_model
 
 obj = user_model()
+auth = auth_model()
 
 
 @app.route("/user/getall")
+@auth.token_auth()
 def user_getall_controller():
     return obj.user_getall_model()
 
@@ -56,6 +59,12 @@ def book_delete_controller(id):
     return obj.book_delete_model(id)
 
 
-@app.route("/book/delete/review/<id>", methods=["DELETE"])  # Delete Book
+@app.route("/book/delete/review/<id>", methods=["DELETE"])  # Delete Book Review
 def book_delete_review_controller(id):
     return obj.book_delete_review_model(id)
+
+
+@app.route("/user/login", methods=["POST"])
+def user_login_controller():
+    # request.form
+    return obj.user_login_model(request.form)
