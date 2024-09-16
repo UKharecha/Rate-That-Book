@@ -104,3 +104,15 @@ class user_model:
             return make_response({"message": "Book Review Deleted Successfully"}, 200)
         else:
             return make_response({"message": "Nothing to Delete"}, 202)
+
+    def user_login_model(self, data):
+        self.cur.execute(
+            f"SELECT id, name, email, phone, role_id FROM users WHERE email='{data['email']}' and password='{data['password']}'"
+        )
+        result = self.cur.fetchall()
+        userdata = result[0]
+        exp_time = datetime.now() + timedelta(minutes=15)
+        exp_epoch_time = int(exp_time.timestamp())
+        payload = {"payload": userdata, "exp": exp_epoch_time}
+        jwtoken = jwt.encode(payload, "umang", algorithm="HS256")
+        return make_response({"token": jwtoken}, 200)
