@@ -47,13 +47,13 @@ class user_model:
 
     def book_addone_model(self, data):
         self.cur.execute(
-            f"INSERT INTO books(book_title) VALUES('{data['book_title']}')"
+            f"INSERT INTO books(book_title, book_author, user_id) VALUES('{data['book_title']}','{data['book_author']}', '{data['user_id']}')"
         )
         return make_response({"message": "Book Added Successfully"}, 201)
 
     def book_addreview_model(self, data):  # Update
         self.cur.execute(
-            f"INSERT INTO books(review_id, user_id) VALUES('{data['review_id']}', '{data['user_id']}' WHERE id={data['id']})"
+            f"INSERT INTO books(review, books_id, users_id) VALUES('{data['review']}', '{data['user_id']}', '{data['book_id']}')"
         )
         return make_response({"message": "Book Added Successfully"}, 201)
 
@@ -68,7 +68,7 @@ class user_model:
 
     def book_update_model(self, data):
         self.cur.execute(
-            f"UPDATE books SET book_title='{data['book_title']}' WHERE id={data['id']}"
+            f"UPDATE books SET book_title='{data['book_title']}', book_author='{data['book_author']}', user_id='{data['user_id']}'  WHERE id={data['id']}"
         )
         if self.cur.rowcount > 0:
             return make_response({"message": "Book Updated Successfully"}, 201)
@@ -77,7 +77,7 @@ class user_model:
 
     def book_update_review_model(self, data):  # Update
         self.cur.execute(
-            f"UPDATE reviews SET book_title='{data['book_title']}' WHERE id={data['id']}"
+            f"UPDATE reviews SET book_title='{data['book_title']}', book_author='{data['book_author']}', books_id='{data['bookd_id']}', users_id='{data['users_id']}' WHERE id={data['id']}"
         )
         if self.cur.rowcount > 0:
             return make_response({"message": "Book's Review Updated Successfully"}, 201)
