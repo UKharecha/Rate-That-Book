@@ -15,11 +15,12 @@ def user_getall_controller():
 
 
 @app.route("/book/getall")
+@auth.token_auth()
 def book_getall_controller():
     return obj.book_getall_model()
 
 
-@app.route("/user/addone", methods=["POST"])  # Add User
+@app.route("/user/addone", methods=["POST"])  # Add User / Signup
 def user_addone_controller():
     return obj.user_addone_model(request.form)
 
@@ -29,22 +30,22 @@ def book_addone_controller():
     return obj.book_addone_model(request.form)
 
 
-@app.route("/book/addreview/<id>", methods=["POST"])  # Add Book Review
+@app.route("/book/addreview", methods=["POST"])  # Add Book Review
 def book_addreview_controller():
     return obj.book_addreview_model(request.form)
 
 
-@app.route("/user/update", methods=["PUT"])  # Update User
+@app.route("/user/update/<id>", methods=["PUT"])  # Update User
 def user_update_controller():
     return obj.user_update_model(request.form)
 
 
-@app.route("/book/update/review", methods=["PUT"])  # Update Book Review
+@app.route("/book/update/<id>", methods=["PUT"])  # Update Book Review
 def book_update_controller():
     return obj.book_update_review_model(request.form)
 
 
-@app.route("/book/review/<id>", methods=["PUT"])  # Update Book
+@app.route("/book/review/update/<id>", methods=["PUT"])  # Update Book
 def book_update_review_controller():
     return obj.book_update_model(request.form)
 
@@ -64,7 +65,7 @@ def book_delete_review_controller(id):
     return obj.book_delete_review_model(id)
 
 
-@app.route("/user/login", methods=["POST"])
+@app.route("/user/login", methods=["POST"])  # Login for Users
 def user_login_controller():
     # request.form
     return obj.user_login_model(request.form)
